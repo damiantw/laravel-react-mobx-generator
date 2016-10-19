@@ -39,9 +39,9 @@ class CreateReactMobxApp extends Command
     {
         $appName = $this->argument('appName');
 
-        $sourcePath = $this->option('source-path') ?: resource_path('assets/js/'.snake_case($appName).'/');;
+        $sourcePath = $this->option('source-path') ?: resource_path('assets/js/'.str_slug($appName).'/');;
 
-        $outputPath = $this->option('output-path') ?: public_path('js/'.snake_case($appName).'/');
+        $outputPath = $this->option('output-path') ?: public_path('js/');
 
         $this->copyDir(__DIR__.'/../Boilerplate/Static/', $sourcePath);
 
@@ -53,14 +53,17 @@ class CreateReactMobxApp extends Command
 
         file_put_contents($sourcePath.'package.json', $packageDotJson);
 
-
-        $webpackConfig = str_replace(
+        $webpackConfigs = str_replace(
             ['{{ PATH }}', '{{ FILENAME }}'],
-            [$outputPath, snake_case($appName).'.js'],
-            file_get_contents(__DIR__.'/../Boilerplate/Templates/webpack.config.js.txt')
+            [$outputPath, str_slug($appName).'.js'],
+            [
+                file_get_contents(__DIR__.'/../Boilerplate/Templates/webpack.config.js.txt'),
+                file_get_contents(__DIR__.'/../Boilerplate/Templates/webpack.production.config.js.txt')
+            ]
         );
 
-        file_put_contents($sourcePath.'webpack.config.js', $webpackConfig);
+        file_put_contents($sourcePath.'webpack.config.js', $webpackConfigs[0]);
+        file_put_contents($sourcePath.'webpack.production.config.js', $webpackConfigs[1]);
 
         $this->info('Done!');
 
@@ -72,7 +75,7 @@ class CreateReactMobxApp extends Command
         while(false !== ( $file = readdir($dir)) ) {
             if (( $file != '.' ) && ( $file != '..' )) {
                 if ( is_dir($src . '/' . $file) ) {
-                    recurse_copy($src . '/' . $file,$dst . '/' . $file);
+                    $this->copyDir($src . '/' . $file,$dst . '/' . $file);
                 }
                 else {
                     copy($src . '/' . $file,$dst . '/' . $file);

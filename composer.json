@@ -11,21 +11,11 @@
   "minimum-stability": "dev",
   "require": {
     "php": ">=5.6.4",
-    "illuminate/console": "^5.3",
-    "illuminate/support": "^5.3"
-  },
-  "require-dev": {
-    "mockery/mockery": "~0.9",
-    "phpunit/phpunit": "~5.0"
+    "laravel/framework": "^5.3"
   },
   "autoload": {
     "psr-4": {
       "DamianTW\\LaravelReactMobxGenerator\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\": "tests/"
     }
   }
 }
