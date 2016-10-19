@@ -9,7 +9,7 @@ module.exports = {
     './src/index'
   ],
   output: {
-    path: '{{ PATH }}',
+    path: '../../../../public/js/',
     filename: '{{ FILENAME }}',
   },
   plugins: [new LiveReloadPlugin()],

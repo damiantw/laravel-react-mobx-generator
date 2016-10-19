@@ -11,7 +11,7 @@ class CreateReactMobxApp extends Command
      *
      * @var string
      */
-    protected $signature = 'make:react-mobx {appName} {--source-path=} {--output-path=}';
+    protected $signature = 'make:react-mobx {appName}';
 
     /**
      * The console command description.
@@ -39,9 +39,7 @@ class CreateReactMobxApp extends Command
     {
         $appName = $this->argument('appName');
 
-        $sourcePath = $this->option('source-path') ?: resource_path('assets/js/'.str_slug($appName).'/');;
-
-        $outputPath = $this->option('output-path') ?: public_path('js/');
+        $sourcePath =  resource_path('assets/js/'.str_slug($appName).'/');;
 
         $this->copyDir(__DIR__.'/../Boilerplate/Static/', $sourcePath);
 
@@ -54,8 +52,8 @@ class CreateReactMobxApp extends Command
         file_put_contents($sourcePath.'package.json', $packageDotJson);
 
         $webpackConfigs = str_replace(
-            ['{{ PATH }}', '{{ FILENAME }}'],
-            [$outputPath, str_slug($appName).'.js'],
+            ['{{ FILENAME }}'],
+            [str_slug($appName).'.js'],
             [
                 file_get_contents(__DIR__.'/../Boilerplate/Templates/webpack.config.js.txt'),
                 file_get_contents(__DIR__.'/../Boilerplate/Templates/webpack.production.config.js.txt')

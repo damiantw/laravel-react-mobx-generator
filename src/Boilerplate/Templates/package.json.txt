@@ -5,8 +5,9 @@
   "author": "",
   "license": "MIT",
   "scripts": {
+        "build": "webpack -w --progress --colors",
         "build-production": "NODE_ENV=production webpack -p --config webpack.production.config.js"
-  }
+  },
   "devDependencies": {
     "babel-core": "^6.9.1",
     "babel-eslint": "^6.1.0",
@@ -18,7 +19,7 @@
     "eslint-plugin-react": "^5.1.1",
     "eslint": "^2.13.1",
     "webpack": "^1.13.1",
-    "webpack-livereload-plugin": "^0.9.0",
+    "webpack-livereload-plugin": "^0.9.0"
   },
   "dependencies": {
     "mobx": "^2.2.2",
